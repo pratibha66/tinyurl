@@ -1,6 +1,6 @@
 package pratibha.co.api;
 
-import org.jvnet.hk2.annotations.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+@RestController
 @Path("/tinyurl")
 public class TinyURL {
 
