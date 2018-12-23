@@ -18,6 +18,11 @@ public class TinyUrlRepositoryImpl implements TinyUrlRepository {
                 "SELECT * FROM Users",
                 (rs, rowNum) -> new User( rs.getString("userid"), rs.getString("cname"),
                         rs.getString("createdon"))).stream().collect(Collectors.toList());
+    }
 
+    public void createUser(User user){
+        jdbcTemplate.update(
+                "INSERT INTO Users(userid, cname) VALUES (?, ?)",
+                user.getUserId(), user.getCname());
     }
 }

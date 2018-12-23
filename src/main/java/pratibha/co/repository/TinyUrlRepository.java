@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TinyUrlRepository {
     List<User> getAllUser();
+    void createUser(User user);
 }

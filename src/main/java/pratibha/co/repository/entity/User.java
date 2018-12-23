@@ -10,6 +10,7 @@ public class User {
         this.cname = cname;
         this.createdOn = createdOn;
     }
+    public User(){}
 
     public String getUserId() {
         return userId;
