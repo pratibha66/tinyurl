@@ -1,6 +1,7 @@
 package pratibha.co.repository;
 
 
+import pratibha.co.repository.entity.Url;
 import pratibha.co.repository.entity.User;
 
 import java.util.List;
@@ -8,4 +9,10 @@ import java.util.List;
 public interface TinyUrlRepository {
     List<User> getAllUser();
     void createUser(User user);
+    List<Url> getAllUrls();
+    void deleteUrl(Url url);
+    void createUrlMapping(Url url);
+    String getOriginalUrl(final String shorturl);
+
+
 }
