@@ -49,9 +49,9 @@ public class TinyUrlRepositoryImpl implements TinyUrlRepository {
     public List<Url> getAllUrls() {
         return jdbcTemplate.query(
                 "SELECT * FROM URL",
-                (rs, rowNum) -> new Url( rs.getString("userid"), rs.getString("originalurl"),
+                (rs, rowNum) -> new Url( rs.getString("userid"), null,
                         BASE_URL + rs.getString("shorturl"),
-                        rs.getString("createdon"))).stream().collect(Collectors.toList());
+                        null)).stream().collect(Collectors.toList());
     }
 
     @Transactional
