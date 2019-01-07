@@ -19,8 +19,11 @@ import java.util.stream.Collectors;
 @Repository
 public class TinyUrlRepositoryImpl implements TinyUrlRepository {
     private static final String BASE_URL = "localhost:8080/tinyurl/";
-    @Autowired
     private JdbcTemplate jdbcTemplate;
+    @Autowired
+    public TinyUrlRepositoryImpl(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
     public List<User> getAllUser(){
         return jdbcTemplate.query(
                 "SELECT * FROM Users",
