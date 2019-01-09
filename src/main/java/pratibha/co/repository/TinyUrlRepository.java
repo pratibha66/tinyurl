@@ -11,6 +11,6 @@ public interface TinyUrlRepository {
     void createUser(User user);
     List<Url> getAllUrls();
     void deleteUrl(final String userId, final String shortUrl);
-    void createUrlMapping(Url url);
+    String createUrlMapping(Url url);
     String getOriginalUrl(final String shorturl);
 }

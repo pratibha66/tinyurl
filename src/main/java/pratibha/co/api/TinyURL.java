@@ -9,6 +9,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -32,8 +34,10 @@ public class TinyURL {
     @POST
     @Produces("application/json")
     public Response createUrlMapping(Url url){
-        tinyUrlRepository.createUrlMapping(url);
-        return Response.status(Response.Status.CREATED).build();
+        final String res = tinyUrlRepository.createUrlMapping(url);
+        Map<String, String> map = new HashMap<>();
+        map.put("tinyUrl", res);
+        return Response.status(Response.Status.CREATED).header("Location", res).entity(map).build();
     }
     @GET
     @Path("{shorturl}")

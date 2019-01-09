@@ -59,7 +59,7 @@ public class TinyUrlRepositoryImpl implements TinyUrlRepository {
 
     @Transactional
     @Override
-    public void createUrlMapping(Url url){
+    public String createUrlMapping(Url url){
         try {
             int count = jdbcTemplate.queryForObject(
                     "Select count(*) From Users Where userid = ?", Integer.class, url.getUserId());
@@ -92,6 +92,7 @@ public class TinyUrlRepositoryImpl implements TinyUrlRepository {
                     availableUrl);
             jdbcTemplate.update(
                     "Insert Into occupied_urls(short_url) values(?)", availableUrl);
+            return BASE_URL + availableUrl;
         } catch (DataAccessException ex){
             ex.printStackTrace();
             throw new ServerErrorException(Response.Status.SERVICE_UNAVAILABLE);
