@@ -101,11 +101,11 @@ public class TinyUrlRepositoryImpl implements TinyUrlRepository {
 
 
     @Transactional
-    public void deleteUrl(Url url){
+    public void deleteUrl(final String userId, final String shortUrl ){
         try {
             List<Url> urls = jdbcTemplate.query(
-                    "Select * From Url Where userid = ? And shorturl = ?", new Object[]{url.getUserId(),
-                    url.getShortUrl().replace(BASE_URL,"")},
+                    "Select * From Url Where userid = ? And shorturl = ?", new Object[]{userId,
+                   shortUrl},
                     (rs, rowNum) -> new Url( rs.getString("userid"), rs.getString("originalurl"),
                             BASE_URL + rs.getString("shorturl"),
                             rs.getString("createdon"))).stream().collect(Collectors.toList());
@@ -114,12 +114,11 @@ public class TinyUrlRepositoryImpl implements TinyUrlRepository {
                 throw new NotFoundException();
             }
             jdbcTemplate.update("Delete From Url Where userid = ? And shorturl = ?",
-                    url.getUserId(), url.getShortUrl().replace(BASE_URL,""));
-            jdbcTemplate.update("Delete From occupied_urls Where userid = ? And shorturl = ?",
-                    url.getUserId(), url.getShortUrl().replace(BASE_URL,""));
+                    userId, shortUrl);
+            jdbcTemplate.update("Delete From occupied_urls Where short_url = ?", shortUrl);
             jdbcTemplate.update(
                     "INSERT INTO available_urls(short_url) VALUES (?)",
-                    url.getShortUrl().replace(BASE_URL,""));
+                    shortUrl);
         } catch (DataAccessException ex){
             ex.printStackTrace();
             throw new ServerErrorException(Response.Status.SERVICE_UNAVAILABLE);

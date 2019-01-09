@@ -24,8 +24,9 @@ public class TinyURL {
     }
     @DELETE
     @Produces("application/json")
-    public Response deleteUrl(Url url){
-        tinyUrlRepository.deleteUrl(url);
+    @Path("{userId}/{shortUrl}")
+    public Response deleteUrl(@PathParam("userId") String userId, @PathParam("shortUrl") String shortUrl){
+        tinyUrlRepository.deleteUrl(userId, shortUrl);
         return Response.status(Response.Status.ACCEPTED).build();
     }
     @POST
